@@ -32,10 +32,9 @@ class MongoDBExtension extends LoaderExtension
 
     public function mongodbLoad($config, BuilderConfiguration $configuration)
     {
-        $loader = new XmlFileLoader(__DIR__.'/../Resources/config');
-        $configuration->merge($loader->load($this->resources['mongodb']));
-
         if (!$configuration->hasDefinition('doctrine.odm.mongodb.document_manager')) {
+            $loader = new XmlFileLoader(__DIR__.'/../Resources/config');
+            $configuration->merge($loader->load($this->resources['mongodb']));
 
             $configuration->setParameter('doctrine.odm.mongodb.mapping_dirs', $this->findBundleSubpaths('Resources/config/doctrine/metadata', $configuration));
             $configuration->setParameter('doctrine.odm.mongodb.document_dirs', $this->findBundleSubpaths('Document', $configuration));
